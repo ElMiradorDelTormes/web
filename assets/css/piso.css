@@ -1,0 +1,15 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    max-height: calc(100vh - 66px);
+    overflow: hidden;
+}
+
+main img {
+    width: 100%;
+}
+
+h1 {
+    font-size: 36pt;
+    margin-top: 120px;
+}

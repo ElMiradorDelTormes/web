@@ -1,49 +1,45 @@
-!function (){
-    var nImagenes = 0;
-    var body = document.body,
-    html = document.documentElement;
-    var scrolledBefore = 0;
-    document.body.onload = function() {
-        cargarImagenes(9);
-    }
-    window.addEventListener("scroll",scrollFunction);
-    
-    function scrollFunction() {
+!function() {
+    const url = location.search;
+    const urlParams = new URLSearchParams(url);
 
-        var scrollTop = window.pageYOffset;
-        var docHeight = Math.max( body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight );;
-        var winHeight = window.innerHeight;
-        var scrollPercent = scrollTop / (docHeight - winHeight);
+    cargarNav();
+    cargarPagina(_getNombrePagina());
 
-        if(window.pageYOffset > scrolledBefore){
-            console.log(scrollPercent);
-            if(scrollPercent > 0.8){
-                if(!cargarImagenes(6))
-                    window.removeEventListener("scroll",scrollFunction);
-            }
-            scrolledBefore = window.pageYOffset;
-        }
-    }
-
-    function cargarImagenes(n){
-        console.log("Cargando imagenes de "+nImagenes+" a "+(nImagenes+n));
-        var imagenesNuevas = galeriaData.slice(nImagenes,(nImagenes+n));
-        nImagenes+=n;
-        imagenesNuevas.forEach((imagen)=>{
-            setTimeout(()=>{
-                var newItem = document.createElement('div');
-                newItem.innerHTML = '<img class="loader" src="assets/img/loader.gif"/>';
-                var newImage = document.createElement('img');
-                newImage.src = imagen.src;
-                newImage.alt = imagen.descripcion;
-                newImage.classList.add("img")
-                newItem.appendChild(newImage);
-                document.querySelector("#container-galeria").appendChild(newItem);
-                newImage.onload = (e)=>{
-                    e.target.parentNode.classList.add("img-cargada");
-                };
-            },50);
+    function cargarNav() {
+        var pags = Object.keys(paginas);
+        pags.forEach((pagina)=> {
+            var newElement = document.createElement("li");
+            if(pagina == _getNombrePagina())
+                newElement.setAttribute("activo","true");
+            newElement.innerHTML = '<a href="?pagina='+pagina+'">'+paginas[pagina].nombre+'</a>';
+            document.querySelector("header nav ul").appendChild(newElement);
         });
-        return imagenesNuevas.length == n;
+    }
+    
+    function cargarPagina(nombre){
+        if("estilos" in paginas[nombre])
+            paginas[nombre].estilos.forEach((paginaEstilos)=>{
+                var newPagina = document.createElement("link");
+                newPagina.rel = "stylesheet";
+                newPagina.href = paginaEstilos.src;
+                if("media" in paginaEstilos)
+                    newPagina.media = paginaEstilos.media;
+                document.head.appendChild(newPagina);
+            });
+        if("scripts" in paginas[nombre])
+            paginas[nombre].scripts.forEach((paginaScripts)=> {
+                var newPagina = document.createElement("script");
+                newPagina.src = paginaScripts.src;
+                if(("defer" in paginaScripts) && (paginaScripts.defer == true))
+                    newPagina.defer = true;
+                document.head.appendChild(newPagina);
+            });
+        document.querySelector("main").innerHTML = paginas[nombre].main;
+    }
+
+    function _getNombrePagina(){
+        if(urlParams.has("pagina"))
+            return urlParams.get("pagina");
+        return "piso";
     }
 }();

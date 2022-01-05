@@ -11,6 +11,7 @@ header{
     top: 0px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     height: 66px;
     padding: 0 60px;
     background: #fff;
@@ -22,4 +23,24 @@ header .logo{
 }
 main{
     padding: 0 66px;
+}
+header nav ul {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+header a{
+    text-transform: capitalize;
+    color: #000;
+    text-decoration: none;
+}
+
+header nav li {
+    padding: 3px 0;
+}
+header nav li:hover{
+    border-bottom: 3px dotted;
+}
+header nav li[activo] {
+    border-bottom: 3px solid;
 }
