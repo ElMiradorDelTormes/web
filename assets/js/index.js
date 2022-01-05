@@ -31,12 +31,16 @@
         nImagenes+=n;
         imagenesNuevas.forEach((imagen)=>{
             setTimeout(()=>{
+                var newItem = document.createElement('div');
+                newItem.innerHTML = '<img class="loader" src="assets/img/loader.gif"/>';
                 var newImage = document.createElement('img');
                 newImage.src = imagen.src;
                 newImage.alt = imagen.descripcion;
-                document.querySelector("#container-galeria").appendChild(newImage);
+                newImage.classList.add("img")
+                newItem.appendChild(newImage);
+                document.querySelector("#container-galeria").appendChild(newItem);
                 newImage.onload = (e)=>{
-                    e.target.classList.add("img-cargada");
+                    e.target.parentNode.classList.add("img-cargada");
                 };
             },50);
         });

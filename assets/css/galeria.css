@@ -18,7 +18,13 @@ img {
 #container-galeria img {
     opacity: 0;
 }
-.img-cargada {
+#container-galeria .loader{
+    opacity: 1;
+}
+.img-cargada .loader{
+    display: none;
+}
+.img-cargada .img{
     animation: aparecer 1s ease-in-out forwards;
 }
 @keyframes aparecer {
