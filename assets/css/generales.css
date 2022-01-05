@@ -1,0 +1,25 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: sans-serif;
+}
+header{
+    position: sticky;
+    top: 0px;
+    display: flex;
+    align-items: center;
+    height: 66px;
+    padding: 0 60px;
+    background: #fff;
+    z-index: 1;
+}
+header .logo{
+    max-height: 200px;
+    width: auto;
+}
+main{
+    padding: 0 66px;
+}
