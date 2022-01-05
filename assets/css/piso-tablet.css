@@ -1,0 +1,8 @@
+main {
+    display: grid;
+    grid-template-columns: 1fr;
+    max-height: none;
+}
+main img {
+    grid-row-start: 1;
+}

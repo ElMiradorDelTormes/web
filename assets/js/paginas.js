@@ -5,6 +5,10 @@ const paginas = {
         "main": '<h1>Mirador del Tormes, un espacio luminoso y confortable.</h1><img src="assets/img/optimized/piso/Sexto-Render.png"/>',
         "estilos": [{
             "src": "assets/css/piso.css"
+        },
+        {
+            "src": "assets/css/piso-tablet.css",
+            "media": "(max-width: 1024px)"
         }]
     },
     "galeria": {
