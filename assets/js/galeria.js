@@ -1,10 +1,32 @@
 !function (){
     var nImagenes = 0;
-    var body = document.body,
-    html = document.documentElement;
+    var nImagenesCarga = 0;
+    var body = document.body;
+    var html = document.documentElement;
     var scrolledBefore = 0;
+
+    var isPaused = false;
+    function wait() {
+        if(document.body.scrollHeight > window.innerHeight){
+            return;
+        }
+        if(nImagenesCarga >= galeriaData.length){
+            return;
+        }
+        if(isPaused){
+            setTimeout(function(){wait()},50);
+        }
+        else {
+            nImagenesCarga++;
+            cargarImagenes(1);
+            wait();
+        }
+            
+    }
     document.body.onload = function() {
-        cargarImagenes(9);
+        wait();
+        if(nImagenesCarga > 6)
+            nImagenesCarga = 6;
     }
     window.addEventListener("scroll",scrollFunction);
     
@@ -15,7 +37,7 @@
         var scrollPercent = scrollTop / (docHeight - winHeight);
         if(window.pageYOffset > scrolledBefore){
             if(scrollPercent > 0.8){
-                if(!cargarImagenes(6))
+                if(!cargarImagenes(3))
                     window.removeEventListener("scroll",scrollFunction);
             }
             scrolledBefore = window.pageYOffset;
@@ -23,20 +45,32 @@
     }
 
     function cargarImagenes(n){
+        isPaused = true;
         var imagenesNuevas = galeriaData.slice(nImagenes,(nImagenes+n));
         nImagenes+=n;
         imagenesNuevas.forEach((imagen)=>{
             setTimeout(()=>{
                 var newItem = document.createElement('div');
-                newItem.innerHTML = '<img class="loader" src="assets/img/loader.gif"/>';
+
+                var auxImage = document.createElement('img');
+                auxImage.classList.add("loader");
+                auxImage.src = "assets/img/loader.gif";
+                newItem.appendChild(auxImage);
+                auxImage.onload = function() {
+                    isPaused = false;
+                }
                 var newImage = document.createElement('img');
                 newImage.src = imagen.src;
                 newImage.alt = imagen.descripcion;
+                newImage.width = imagen.width;
+                newImage.height = imagen.height;
                 newImage.classList.add("img")
                 newItem.appendChild(newImage);
                 document.querySelector("#container-galeria").appendChild(newItem);
                 newImage.onload = (e)=>{
                     e.target.parentNode.classList.add("img-cargada");
+                    if(scrolledBefore == 0)
+                        wait();
                 };
             },50);
         });
