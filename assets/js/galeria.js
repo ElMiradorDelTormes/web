@@ -6,12 +6,17 @@
     var scrolledBefore = 0;
 
     var isPaused = false;
+    var stopChargingMovil = false;
 
     function wait() {
         if(document.body.scrollHeight > window.innerHeight) {
             if(window.innerWidth >= 1024) {
                 if(nImagenes%3 != 0)
                     cargarImagenes(1);
+            }
+            else {
+                stopChargingMovil = true;
+                cargarImagenes(1);
             }
             return;
         }
@@ -74,7 +79,7 @@
                 document.querySelector("#container-galeria").appendChild(newItem);
                 newImage.onload = (e)=>{
                     e.target.parentNode.classList.add("img-cargada");
-                    if(scrolledBefore == 0)
+                    if(scrolledBefore == 0 && stopChargingMovil == false)
                         wait();
                 };
             },50);
