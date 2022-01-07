@@ -6,18 +6,11 @@
     var scrolledBefore = 0;
 
     var isPaused = false;
-    var stopChargingMovil = false;
 
     function wait() {
         if(document.body.scrollHeight > window.innerHeight) {
-            if(window.innerWidth >= 1024) {
-                if(nImagenes%3 != 0)
-                    cargarImagenes(1);
-            }
-            else {
-                stopChargingMovil = true;
+            if(nImagenes%3 != 0)
                 cargarImagenes(1);
-            }
             return;
         }
         if(nImagenesCarga >= galeriaData.length) {
@@ -34,9 +27,10 @@
             
     }
     document.body.onload = function() {
-        wait();
-        if(nImagenesCarga > 6)
-            nImagenesCarga = 6;
+        if(window.innerWidth <= 1024)
+            cargarImagenes(6);
+        else
+            wait();
     }
     window.addEventListener("scroll",scrollFunction);
     
@@ -79,7 +73,7 @@
                 document.querySelector("#container-galeria").appendChild(newItem);
                 newImage.onload = (e)=>{
                     e.target.parentNode.classList.add("img-cargada");
-                    if(scrolledBefore == 0 && stopChargingMovil == false)
+                    if(scrolledBefore == 0)
                         wait();
                 };
             },50);
