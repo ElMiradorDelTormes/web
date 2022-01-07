@@ -9,10 +9,10 @@
 
     function wait() {
         if(document.body.scrollHeight > window.innerHeight) {
-            /*if(window.innerWidth > 1024) {
+            if(window.innerWidth >= 1024) {
                 if(nImagenes%3 != 0)
                     cargarImagenes(1);
-            }*/
+            }
             return;
         }
         if(nImagenesCarga >= galeriaData.length) {
