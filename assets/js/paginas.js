@@ -2,7 +2,7 @@ const paginas = {
     "piso": {
         "nombre": "El piso",
         "url": "piso",
-        "main": '<h1>Mirador del Tormes, un espacio luminoso y confortable.</h1><img src="assets/img/optimized/piso/Sexto-Render.png"/>',
+        "main": '<h1>Mirador del Tormes, un espacio luminoso y confortable.</h1><img src="assets/img/optimized/piso/Sexto-Render.webp"/>',
         "estilos": [{
             "src": "assets/css/piso.css"
         },
