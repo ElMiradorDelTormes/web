@@ -6,8 +6,13 @@
     var scrolledBefore = 0;
 
     var isPaused = false;
+    var continuarCargando = true;
+
     function wait() {
         if(document.body.scrollHeight > window.innerHeight){
+            continuarCargando=false;
+            if(window.innerWidth > 1024)
+                cargarImagenes(2);
             return;
         }
         if(nImagenesCarga >= galeriaData.length){
@@ -69,7 +74,7 @@
                 document.querySelector("#container-galeria").appendChild(newItem);
                 newImage.onload = (e)=>{
                     e.target.parentNode.classList.add("img-cargada");
-                    if(scrolledBefore == 0)
+                    if(scrolledBefore == 0 && continuarCargando == true)
                         wait();
                 };
             },50);
