@@ -6,19 +6,19 @@
     var scrolledBefore = 0;
 
     var isPaused = false;
-    var continuarCargando = true;
 
     function wait() {
-        if(document.body.scrollHeight > window.innerHeight){
-            continuarCargando=false;
-            if(window.innerWidth > 1024)
-                cargarImagenes(2);
+        if(document.body.scrollHeight > window.innerHeight) {
+            if(window.innerWidth > 1024) {
+                if(nImagenes%3 != 0)
+                    cargarImagenes(1);
+            }
             return;
         }
-        if(nImagenesCarga >= galeriaData.length){
+        if(nImagenesCarga >= galeriaData.length) {
             return;
         }
-        if(isPaused){
+        if(isPaused) {
             setTimeout(function(){wait()},50);
         }
         else {
@@ -74,7 +74,7 @@
                 document.querySelector("#container-galeria").appendChild(newItem);
                 newImage.onload = (e)=>{
                     e.target.parentNode.classList.add("img-cargada");
-                    if(scrolledBefore == 0 && continuarCargando == true)
+                    if(scrolledBefore == 0)
                         wait();
                 };
             },50);
